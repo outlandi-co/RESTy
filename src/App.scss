@@ -8,6 +8,8 @@ html, body {
 
 body {
   background: $backgroundColor;
+  background-color:navy;
+  color: turquoise;
   height: 100%;
 
   #root {
@@ -24,11 +26,25 @@ body {
   }
 
   header {
-    background: darken($backgroundColor, 75);
-    border-bottom: 1px solid #eee;
+    background: darken($backgroundColor, 95);
+    border-bottom: 2px solid #f8f8f8;
     color: #eee;
-    padding: 0;
+    padding: 2em;
     margin: 0;
     text-align: center;
   }
 }
+
+body {
+  background-image: url('api_background.png');
+  background-color: navy;
+  color: rgb(234, 230, 232);
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-size: cover;
+  background-position: center;
+
+  /* Other styles */
+}
+
