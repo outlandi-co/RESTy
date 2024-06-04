@@ -16,3 +16,4 @@ Results.propTypes = {
 };
 
 export default Results;
+
