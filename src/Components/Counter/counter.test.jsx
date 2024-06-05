@@ -1,15 +1,11 @@
-import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import Counter from './Counter.jsx';
+import Counter from './index';
+import { test } from 'vitest';
 
-describe('Counter', () => {
-  it('should render a counter', () => {
-    /* let counter = new Counter();
-       let output = counter.render();
-       let screen = new Screen();
-       */
+test('should render a counter', () => {
+  // Render the Counter component
+  render(<Counter />);
 
-    render(<Counter />);
-    expect(screen.getByText('Counter...')).toBeInTheDocument();
-  });
+  // Check if the text 'Counter...' (case insensitive) is in the document
+  expect(screen.getByText(/Counter.../i)).toBeInTheDocument();
 });
