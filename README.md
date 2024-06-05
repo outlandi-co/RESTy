@@ -1,4 +1,7 @@
-# React + Vite
+# RESTy
+
+## React + Vite
+
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
@@ -14,6 +17,4 @@ Get- Disney API Characters
 -established connection with Github
 
 -had to unlink the original account on github and re-established a new account to enable acp for this project
-
-# RESTy
-
+-Got most of the work done to the best of my understanding. I have to keep fixing the tests
