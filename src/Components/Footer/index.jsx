@@ -1,9 +1,8 @@
-import React from 'react';
+// src/Components/Footer/index.jsx
 
-class Footer extends React.Component {
-  render() {
-    return <footer>&copy; 2024</footer>;
-  }
-}
+
+const Footer = () => (
+  <footer>&copy; 2024</footer>
+);
 
 export default Footer;
