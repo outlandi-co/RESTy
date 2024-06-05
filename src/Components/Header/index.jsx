@@ -1,11 +1,15 @@
-import { render, screen } from '@testing-library/react';
-import Header from './index';
-import { test } from 'vitest';
+// index.jsx
 
-test('renders Header', () => {
-  // Render the Header component
-  render(<Header />);
+import React from 'react';
 
-  // Check if the text 'Header' (case insensitive) is in the document
-  expect(screen.getByText(/Header/i)).toBeInTheDocument();
-});
+const Header = () => {
+  return (
+    <header>
+      <h1>RESTy</h1>
+    </header>
+  );
+};
+
+
+
+export default Header;
