@@ -1,5 +1,4 @@
-// src/Components/Form/index.jsx
-import { useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import './Form.scss';
 
@@ -18,7 +17,7 @@ const Form = ({ handleApiCall }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="Form" onSubmit={handleSubmit}>
       <label>
         <span>URL: </span>
         <input name='url' type='text' value={url} onChange={handleUrlChange} />
