@@ -1,6 +1,4 @@
-$backgroundColor: #efefef;
-$radius: 40%;
-
+// src/Components/Form/Form.scss
 form {
   display: inline-block;
   margin: auto;
@@ -18,8 +16,8 @@ form {
         background: #037d09;
         border-radius: 8px;
         opacity: 0.7; 
-        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* horizontal offset, vertical offset, blur radius, color */
-        
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); 
+
         &:hover, &.active {
           background: #06506f;
         }

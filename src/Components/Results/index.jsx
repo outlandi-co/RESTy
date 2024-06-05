@@ -1,19 +1,20 @@
-import React from 'react';
+// src/Components/Results/index.jsx
+
 import PropTypes from 'prop-types';
 
-class Results extends React.Component {
-  render() {
-    return (
-      <section>
-        <pre>{this.props.data ? JSON.stringify(this.props.data, undefined, 2) : null}</pre>
-      </section>
-    );
-  }
-}
+const Results = ({ data, error }) => (
+  <section>
+    {error ? (
+      <pre>{error}</pre>
+    ) : (
+      <pre>{data ? JSON.stringify(data, undefined, 2) : null}</pre>
+    )}
+  </section>
+);
 
 Results.propTypes = {
-  data: PropTypes.any, // Accept any type of data
+  data: PropTypes.any,
+  error: PropTypes.string,
 };
 
 export default Results;
-
