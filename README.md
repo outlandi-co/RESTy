@@ -12,3 +12,4 @@ Get- Disney API Characters
 -Live JSON DATA within the browser
 -Need to stylize the App
 -established connection with Github
+# RESTy
