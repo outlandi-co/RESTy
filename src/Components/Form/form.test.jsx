@@ -1,23 +1,69 @@
-// src/Components/Form/Form.test.jsx
+import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
-import Form from './index';
+import Form from './Form';
 
-test('Form calls handleApiCall on submit', () => {
-  // Mock function to track API call
-  const handleApiCall = jest.fn();
+// Mock the fetchData function
+jest.mock('./path/to/your/file', () => ({
+  ...jest.requireActual('./path/to/your/file'),
+  fetchData: jest.fn().mockResolvedValue('fakeData'),
+}));
 
-  // Render the Form component with the mock function as a prop
-  const { getByText, getByLabelText } = render(<Form handleApiCall={handleApiCall} />);
+describe('Form Component', () => {
+  test('renders form fields correctly', () => {
+    const { getByLabelText, getByText } = render(<Form handleApiCall={() => {}} />);
+    
+    expect(getByLabelText('URL:')).toBeInTheDocument();
+    expect(getByLabelText('Method:')).toBeInTheDocument();
+    expect(getByText('GO!')).toBeInTheDocument();
+  });
 
-  // Simulate user entering URL in the input field
-  fireEvent.change(getByLabelText(/url/i), { target: { value: 'https://api.example.com' } });
+  test('handles form submission correctly', () => {
+    const handleApiCall = jest.fn();
+    const { getByText, getByLabelText } = render(<Form handleApiCall={handleApiCall} />);
 
-  // Simulate user clicking the submit button
-  fireEvent.click(getByText(/go!/i));
+    fireEvent.change(getByLabelText('URL:'), { target: { value: 'https://api.example.com/data' } });
+    fireEvent.click(getByText('GET'));
 
-  // Check if the handleApiCall function was called with the correct parameters
-  expect(handleApiCall).toHaveBeenCalledWith({
-    method: 'GET',
-    url: 'https://api.example.com',
+    fireEvent.click(getByText('GO!'));
+
+    expect(handleApiCall).toHaveBeenCalledWith({
+      url: 'https://api.example.com/data',
+      method: 'GET',
+      body: null,
+    });
   });
 });
+
+
+
+// // Form.test.jsx
+
+// import React from 'react';
+// import { render, fireEvent } from '@testing-library/react';
+// import Form from './Form';
+
+// describe('Form Component', () => {
+//   test('renders form fields correctly', () => {
+//     const { getByLabelText, getByText } = render(<Form handleApiCall={() => {}} />);
+    
+//     expect(getByLabelText('URL:')).toBeInTheDocument();
+//     expect(getByLabelText('Method:')).toBeInTheDocument();
+//     expect(getByText('GO!')).toBeInTheDocument();
+//   });
+
+//   test('handles form submission correctly', () => {
+//     const handleApiCall = jest.fn();
+//     const { getByText, getByLabelText } = render(<Form handleApiCall={handleApiCall} />);
+
+//     fireEvent.change(getByLabelText('URL:'), { target: { value: 'https://api.example.com/data' } });
+//     fireEvent.click(getByText('GET'));
+
+//     fireEvent.click(getByText('GO!'));
+
+//     expect(handleApiCall).toHaveBeenCalledWith({
+//       url: 'https://api.example.com/data',
+//       method: 'GET',
+//       body: null,
+//     });
+//   });
+// });

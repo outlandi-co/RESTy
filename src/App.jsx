@@ -1,5 +1,4 @@
-// src/App.jsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.scss';
 import Header from './Components/Header';
 import Footer from './Components/Footer';
@@ -14,7 +13,10 @@ const App = () => {
 
   const callApi = async (requestParams) => {
     try {
-      const response = await axios.get(requestParams.url);
+      const response = await axios({
+        method: requestParams.method,
+        url: requestParams.url,
+      });
       setData(response.data);
       setRequestParams(requestParams);
       setError(null);
@@ -22,6 +24,12 @@ const App = () => {
       setError(error.message);
     }
   };
+
+  useEffect(() => {
+    if (requestParams.url) {
+      callApi(requestParams);
+    }
+  }, [requestParams]);
 
   return (
     <React.Fragment>

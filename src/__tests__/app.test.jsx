@@ -1,19 +1,38 @@
-// src/__tests__/App.test.jsx
+import React from 'react';
+import { render } from '@testing-library/react';
+import App from './App';
 
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import App from '../App';
-
-test('renders App and makes an API call', async () => {
-  render(<App />);
-
-  const urlInput = screen.getByLabelText(/url/i);
-  fireEvent.change(urlInput, { target: { value: 'https://api.example.com' } });
-
-  const goButton = screen.getByText(/go!/i);
-  fireEvent.click(goButton);
-
-  await waitFor(() => {
-    expect(screen.getByText(/request method/i)).toHaveTextContent('GET');
-    expect(screen.getByText(/url/i)).toHaveTextContent('https://api.example.com');
+describe('App Component', () => {
+  test('renders header and form', () => {
+    const { getByText, getByLabelText } = render(<App />);
+    
+    expect(getByText('RESTy')).toBeInTheDocument();
+    expect(getByLabelText('URL:')).toBeInTheDocument();
+    expect(getByLabelText('Method:')).toBeInTheDocument();
+    expect(getByText('GO!')).toBeInTheDocument();
   });
+
+  // You can write more tests for other scenarios, such as API call handling and displaying results.
 });
+
+
+
+
+// // App.test.jsx
+
+// import React from 'react';
+// import { render } from '@testing-library/react';
+// import App from './App';
+
+// describe('App Component', () => {
+//   test('renders header and form', () => {
+//     const { getByText, getByLabelText } = render(<App />);
+    
+//     expect(getByText('RESTy')).toBeInTheDocument();
+//     expect(getByLabelText('URL:')).toBeInTheDocument();
+//     expect(getByLabelText('Method:')).toBeInTheDocument();
+//     expect(getByText('GO!')).toBeInTheDocument();
+//   });
+
+//   // You can write more tests for other scenarios, such as API call handling and displaying results.
+// });

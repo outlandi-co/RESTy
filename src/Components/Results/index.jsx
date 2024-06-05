@@ -1,20 +1,19 @@
-// src/Components/Results/index.jsx
+import React from 'react';
+import ReactJson from 'react-json-view';
 
-import PropTypes from 'prop-types';
+const Results = ({ data }) => {
+  if (!data) {
+    return <div>No data available</div>;
+  }
 
-const Results = ({ data, error }) => (
-  <section>
-    {error ? (
-      <pre>{error}</pre>
-    ) : (
-      <pre>{data ? JSON.stringify(data, undefined, 2) : null}</pre>
-    )}
-  </section>
-);
-
-Results.propTypes = {
-  data: PropTypes.any,
-  error: PropTypes.string,
+  return (
+    <div>
+      <h2>Results:</h2>
+      {data.data && <ReactJson src={data.data} />}
+      <h2>Headers:</h2>
+      {data.headers && <ReactJson src={data.headers} />}
+    </div>
+  );
 };
 
 export default Results;
