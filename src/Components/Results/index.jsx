@@ -2,16 +2,24 @@ import React from 'react';
 import ReactJson from 'react-json-view';
 
 const Results = ({ data }) => {
-  if (!data) {
-    return <div>No data available</div>;
-  }
+  const isJsonObject = (data) => {
+    return data && typeof data === 'object' && !Array.isArray(data);
+  };
 
   return (
     <div>
       <h2>Results:</h2>
-      {data.data && <ReactJson src={data.data} />}
+      {isJsonObject(data?.data) ? (
+        <ReactJson src={data.data} />
+      ) : (
+        <div>No valid JSON data available</div>
+      )}
       <h2>Headers:</h2>
-      {data.headers && <ReactJson src={data.headers} />}
+      {isJsonObject(data?.headers) ? (
+        <ReactJson src={data.headers} />
+      ) : (
+        <div>No valid JSON headers available</div>
+      )}
     </div>
   );
 };

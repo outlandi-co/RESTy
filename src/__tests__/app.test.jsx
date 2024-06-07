@@ -1,38 +1,48 @@
-import React from 'react';
-import { render } from '@testing-library/react';
-import App from './App';
+// src/__tests__/App.test.jsx
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
+import { rest } from 'msw';
+import { setupServer } from 'msw/node';
+import App from '../App';
 
-describe('App Component', () => {
-  test('renders header and form', () => {
-    const { getByText, getByLabelText } = render(<App />);
-    
-    expect(getByText('RESTy')).toBeInTheDocument();
-    expect(getByLabelText('URL:')).toBeInTheDocument();
-    expect(getByLabelText('Method:')).toBeInTheDocument();
-    expect(getByText('GO!')).toBeInTheDocument();
+const server = setupServer(
+  rest.get('https://jsonplaceholder.typicode.com/posts', (req, res, ctx) => {
+    return res(ctx.json([{ id: 1, title: 'Post 1' }]));
+  })
+);
+
+beforeAll(() => server.listen());
+afterEach(() => server.resetHandlers());
+afterAll(() => server.close());
+
+test('renders and fetches data on form submit', async () => {
+  render(<App />);
+  
+  fireEvent.change(screen.getByPlaceholderText('URL'), {
+    target: { value: 'https://jsonplaceholder.typicode.com/posts' },
   });
-
-  // You can write more tests for other scenarios, such as API call handling and displaying results.
+  fireEvent.click(screen.getByText('Go'));
+  
+  await waitFor(() => {
+    expect(screen.getByText(/Post 1/i)).toBeInTheDocument();
+  });
 });
 
+test('stores API call history and allows replay', async () => {
+  render(<App />);
+  
+  fireEvent.change(screen.getByPlaceholderText('URL'), {
+    target: { value: 'https://jsonplaceholder.typicode.com/posts' },
+  });
+  fireEvent.click(screen.getByText('Go'));
 
+  await waitFor(() => {
+    expect(screen.getByText(/Post 1/i)).toBeInTheDocument();
+  });
 
+  fireEvent.click(screen.getByText('https://jsonplaceholder.typicode.com/posts'));
 
-// // App.test.jsx
-
-// import React from 'react';
-// import { render } from '@testing-library/react';
-// import App from './App';
-
-// describe('App Component', () => {
-//   test('renders header and form', () => {
-//     const { getByText, getByLabelText } = render(<App />);
-    
-//     expect(getByText('RESTy')).toBeInTheDocument();
-//     expect(getByLabelText('URL:')).toBeInTheDocument();
-//     expect(getByLabelText('Method:')).toBeInTheDocument();
-//     expect(getByText('GO!')).toBeInTheDocument();
-//   });
-
-//   // You can write more tests for other scenarios, such as API call handling and displaying results.
-// });
+  await waitFor(() => {
+    expect(screen.getByText(/Post 1/i)).toBeInTheDocument();
+  });
+});
